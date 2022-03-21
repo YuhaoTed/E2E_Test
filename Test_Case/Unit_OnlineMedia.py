@@ -1,3 +1,5 @@
+import sys
+sys.path.append( "path" )
 import unittest
 import time
 from Fundament.Pic_Process import *
@@ -5,6 +7,7 @@ from Fundament.Snap_shot import *
 from Fundament.P_can_test import *
 import HTMLTestRunner
 import shutil
+
 class OnlineMedia_Test(unittest.TestCase):
     Touch = SerialThread()
     Pic = Pic_Pro()
@@ -42,7 +45,7 @@ class OnlineMedia_Test(unittest.TestCase):
         if coor == None:
             return False
         else:
-            print("kaishidianji app")
+            print("开始点击"+App_name)
             self.Touch.Send_Touch_Command(coor[0][0],coor[0][1])
             time.sleep(1)
             return True
@@ -81,7 +84,47 @@ class OnlineMedia_Test(unittest.TestCase):
         self.Pic.get_img()
         self.Add_SC_Report('t2')
         self.assertFalse(self.Find_Word(["失败","正在载入"]))
-
+    def test_t3(self):
+        '''进入导航应用'''
+        self.assertTrue(self.Enter_app("导航"))
+        self.PrePare_img()
+        self.Add_SC_Report('t3')
+        time.sleep(1)
+    def test_t4(self):
+        '''进入导航应用,左右滑动是否成功'''
+        self.Touch.Slide(100,100,300,300)
+        time.sleep(1)
+        self.Touch.Slide(300, 300, 200, 400)
+        time.sleep(1)
+        self.Touch.Slide(200, 400, 100, 300)
+        time.sleep(1)
+        self.Sc.Get_png()
+        self.Pic.get_img()
+        self.assertFalse(self.Find_Word(["失败", "正在载入"]))
+        self.Add_SC_Report('t4')
+        time.sleep(1)
+    def test_t5(self):
+        '''进入导航APP，分类搜POI，是否返回正确结果'''
+        self.Touch.Send_Touch_Command(50, 150)
+        time.sleep(0.5)
+        self.Touch.Send_Touch_Command(50, 150)
+        time.sleep(1)
+        self.Touch.Send_Touch_Command(600,150)
+        self.Touch.Send_Touch_Command(656,148)
+        time.sleep(1)
+        self.Sc.Get_png()
+        self.Pic.get_img()
+        self.assertFalse(self.Find_Word(["失败", "正在载入"]))
+        self.Add_SC_Report('t5')
+    def test_t6(self):
+        self.Touch.Touch_main()
+        time.sleep(1)
+        self.Touch.Send_Touch_Command(641,47)
+        time.sleep(1)
+        self.Sc.Get_png()
+        self.Pic.get_img()
+        self.assertFalse(self.Find_Word(["失败", "正在载入"]))
+        self.Add_SC_Report('t6')
 # if __name__ == 'Unit_OnlineMedia':
 #     print(1)
 #     suite = unittest.TestSuite()
