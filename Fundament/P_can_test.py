@@ -298,6 +298,7 @@ class SerialThread:
         #print("开始抬起" + self.data)
         self.SendDate(self.data)
         self.data = "66cc001130010217F8F17308"
+        return True
     def Touch_main(self):
 
         self.data += "04301A0100AAAAAA"
@@ -307,8 +308,10 @@ class SerialThread:
         self.data = "66cc001130010217F8F17308"
         self.data += "04301A000BAAAAAA"
         self.Cal_crc()
+        print('开始点击Main')
         self.SendDate(self.data)
         self.data = "66cc001130010217F8F17308"
+        return True
     def Send_Slide_Command(self,x,y,xdir,ydir):
 
         self.Cal_str(x, y, 2,xdir,ydir)
@@ -359,6 +362,7 @@ class SerialThread:
         self.SendDate(self.data)
         self.data = "66cc001130010217F8F17308"
         time.sleep(0.01)
+        return True
         ###
 
 # ##17F8F173x Id

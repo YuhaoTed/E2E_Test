@@ -14,11 +14,14 @@ class Pic_Pro:
         self.img = cv2.imread('D:\\software\\pythonProject\\SC\\1.PNG')
         #"D:\screenshots\\avartar.PNG"
         #self.img = cv2.imread("D:\screenshots\\T9.PNG")
-    def Pic_OCR(self):
-
+    def Pic_OCR(self,coor=None):
+        #coor[[x1,y1],[x2,y2]] 1：左上角 2：右下角
         #return self.reader.readtext(self.img[0:375, 240:480])
         #self.img = cv2.imread('D:\\1.PNG')
-        return self.reader.readtext(self.img)
+        if coor!=None:
+            return self.reader.readtext(self.img[coor[0][0]:coor[1][0],coor[0][1]:coor[1][1]])
+        else:
+            return self.reader.readtext(self.img)
     def Pic_Icon(self,icon):
         # 读取目标图片
         #print(1)
